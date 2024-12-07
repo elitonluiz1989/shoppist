@@ -7,6 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{1796A9D5-0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{4A3733CA-16C7-41F8-8BBF-57F34D759F37}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Insfrastructure", "Insfrastructure", "{99FB9D08-FEE9-4418-905D-F188C4AEAEE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{679FFF68-DE55-430D-BECB-894739691BB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{BC5FF946-7045-4E26-98DA-4C2E8FB23367}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +23,21 @@ Global
 		{4A3733CA-16C7-41F8-8BBF-57F34D759F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A3733CA-16C7-41F8-8BBF-57F34D759F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A3733CA-16C7-41F8-8BBF-57F34D759F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{679FFF68-DE55-430D-BECB-894739691BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{679FFF68-DE55-430D-BECB-894739691BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{679FFF68-DE55-430D-BECB-894739691BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{679FFF68-DE55-430D-BECB-894739691BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5FF946-7045-4E26-98DA-4C2E8FB23367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5FF946-7045-4E26-98DA-4C2E8FB23367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5FF946-7045-4E26-98DA-4C2E8FB23367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5FF946-7045-4E26-98DA-4C2E8FB23367}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4A3733CA-16C7-41F8-8BBF-57F34D759F37} = {1796A9D5-0A88-45FF-8466-3502FE3CA089}
+		{679FFF68-DE55-430D-BECB-894739691BB9} = {1796A9D5-0A88-45FF-8466-3502FE3CA089}
+		{BC5FF946-7045-4E26-98DA-4C2E8FB23367} = {99FB9D08-FEE9-4418-905D-F188C4AEAEE2}
 	EndGlobalSection
 EndGlobal
