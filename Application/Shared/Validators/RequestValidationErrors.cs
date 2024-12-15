@@ -1,6 +1,6 @@
 ﻿using Application.Shared.Results;
 
-namespace Application.Shared.Requests;
+namespace Application.Shared.Validators;
 
 public static class RequestValidationErrors
 {

@@ -1,5 +1,7 @@
 ﻿using Application.Features.Items.CreateItem;
-using Application.Shared.Requests;
+using Application.Features.Items.CreateItem.Interfaces;
+using Application.Shared.Results;
+using Application.Shared.Validators;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Base;
@@ -13,12 +15,14 @@ public class CreateItemHandlerTests
     private readonly CreateItemHandler _handler;
     private readonly Mock<IItemRepository> _repositoryMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+    private readonly Mock<ICreateItemValidator> _validatorMock;
 
     public CreateItemHandlerTests()
     {
         var mocker = new AutoMocker();
         _unitOfWorkMock = mocker.GetMock<IUnitOfWork>();
         _repositoryMock = mocker.GetMock<IItemRepository>();
+        _validatorMock = mocker.GetMock<ICreateItemValidator>();
         _handler = mocker.CreateInstance<CreateItemHandler>();
     }
 
@@ -30,7 +34,7 @@ public class CreateItemHandlerTests
         var cancellationToken = CancellationToken.None;
 
         // Act
-        var result = await _handler.HandleAsync(request, cancellationToken);
+        Result<CreateItemResponse> result = await _handler.HandleAsync(request, cancellationToken);
 
         // Assert
         Assert.NotNull(result);
@@ -39,6 +43,7 @@ public class CreateItemHandlerTests
         Assert.Single(result.Errors);
         Assert.Equal(RequestValidationErrors.RequestIsNull, result.Errors[0]);
 
+        VerifyValidatorExecution(Times.Never);
         VerifyServiceExecution(Times.Never);
     }
 
@@ -47,18 +52,22 @@ public class CreateItemHandlerTests
     {
         // Arrange
         CreateItemRequest request = new(string.Empty);
-        var cancellationToken = CancellationToken.None;
+        CancellationToken cancellationToken = CancellationToken.None;
+        const string errorMessage = "It is a error";
+
+        SetupValidatorResult(errorMessage);
 
         // Act
-        var result = await _handler.HandleAsync(request, cancellationToken);
+        Result<CreateItemResponse> result = await _handler.HandleAsync(request, cancellationToken);
 
         // Assert
         Assert.NotNull(result);
         Assert.True(result.IsFailure);
         Assert.NotEmpty(result.Errors);
         Assert.Single(result.Errors);
-        Assert.NotEmpty(result.Errors[0].Description);
+        Assert.Equal(errorMessage, result.Errors[0].Description);
 
+        VerifyValidatorExecution(Times.Once);
         VerifyServiceExecution(Times.Never);
     }
 
@@ -67,20 +76,44 @@ public class CreateItemHandlerTests
     {
         // Arrange
         CreateItemRequest request = new("Item 001");
-        var cancellationToken = CancellationToken.None;
+        CancellationToken cancellationToken = CancellationToken.None;
+
+        SetupValidatorResult();
 
         // Act
-        var result = await _handler.HandleAsync(request, cancellationToken);
+        Result<CreateItemResponse> result = await _handler.HandleAsync(request, cancellationToken);
 
         // Assert
         Assert.NotNull(result);
         Assert.True(result.IsSuccess);
         Assert.Empty(result.Errors);
         Assert.NotNull(result.Value);
-        var response = Assert.IsType<CreateItemResponse>(result.Value);
+        CreateItemResponse response = Assert.IsType<CreateItemResponse>(result.Value);
         Assert.Equal(request.Title, response.Title);
 
+        VerifyValidatorExecution(Times.Once);
         VerifyServiceExecution(Times.Once);
+    }
+
+    private void SetupValidatorResult(string? errorMessage = null)
+    {
+        Result<CreateItemResponse> result = string.IsNullOrWhiteSpace(errorMessage)
+            ? Result<CreateItemResponse>.CreateSuccess()
+            : Result<CreateItemResponse>.CreateFailure(
+                new ErrorResult("error", errorMessage)
+            );
+
+        _validatorMock
+            .Setup(x => x.ValidateRequest(It.IsAny<CreateItemRequest>()))
+            .Returns(result);
+    }
+
+    private void VerifyValidatorExecution(Func<Times> times)
+    {
+        _validatorMock.Verify(
+            p => p.ValidateRequest(It.IsAny<CreateItemRequest>()),
+            times
+        );
     }
 
     private void VerifyServiceExecution(Func<Times> times)
