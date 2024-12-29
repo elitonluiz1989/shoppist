@@ -5,30 +5,30 @@ using Domain.Entities.Base;
 
 namespace Application.Shared.Handlers;
 
-public abstract class Handler<TEntity, TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+public abstract class Handler<TEntity, TRequest, TResponse>(
+    IRequestValidator<TRequest, TResponse> validator
+)
+    : IRequestHandler<TRequest, TResponse>
     where TEntity : Entity
 {
-    public virtual async Task<Result<TResponse>> HandleAsync(TRequest? request, CancellationToken cancellationToken)
+    public virtual async Task<Result<TResponse?>> HandleAsync(TRequest? request, CancellationToken cancellationToken)
     {
-        if (request is null)
-            return Result<TResponse>.CreateFailure(RequestValidationErrors.RequestIsNull);
+        Result<TResponse?> result = validator.ValidateRequest(request);
+        ;
 
-        var result = Validate(request);
-
-        if (result.IsFailure)
+        if (result.IsFailure || request is null)
             return result;
 
-        var entity = CreateEntity(request);
+        Result<TEntity?> executeResult = await ExecuteAsync(request, cancellationToken);
 
-        await ExecuteAsync(entity, cancellationToken);
+        if (executeResult.IsFailure || executeResult.Value is null)
+            return Result<TResponse?>.CreateFailure(executeResult.Errors);
 
-        var response = CreateResponse(entity);
+        TResponse response = CreateResponse(executeResult.Value);
 
-        return Result<TResponse>.CreateSuccess(response);
+        return Result<TResponse?>.CreateSuccess(response);
     }
 
-    protected abstract Result<TResponse> Validate(TRequest request);
-    protected abstract TEntity CreateEntity(TRequest request);
-    protected abstract Task ExecuteAsync(TEntity entity, CancellationToken cancellationToken);
+    protected abstract Task<Result<TEntity?>> ExecuteAsync(TRequest request, CancellationToken cancellationToken);
     protected abstract TResponse CreateResponse(TEntity entity);
 }

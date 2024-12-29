@@ -7,8 +7,6 @@ namespace Persistence.Repositories.Base;
 
 public abstract class Repository<TEntity>(AppDbContext context) : IRepository<TEntity> where TEntity : Entity
 {
-    private readonly AppDbContext _context = context;
-
     public async Task<List<TEntity>> AllAsync(CancellationToken cancellationToken)
     {
         return await GetDbSet().ToListAsync(cancellationToken);
@@ -36,6 +34,6 @@ public abstract class Repository<TEntity>(AppDbContext context) : IRepository<TE
 
     private DbSet<TEntity> GetDbSet()
     {
-        return _context.Set<TEntity>();
+        return context.Set<TEntity>();
     }
 }

@@ -1,60 +1,21 @@
 ﻿using Application.Features.Items.CreateItem;
+using Application.Features.Items.Shared;
 using Application.Shared.Results;
-using Bogus;
-using Moq.AutoMock;
+using Tests.Application.Features.Items.Shared;
 
 namespace Tests.Application.Features.Items.CreateItem;
 
-public class CreateItemValidatorTests
+public class CreateItemValidatorTests : ItemValidatorTests<CreateItemValidator, ItemRequest>
 {
-    private readonly Faker _faker;
-    private readonly CreateItemValidator _validator;
-
-    public CreateItemValidatorTests()
-    {
-        var mocker = new AutoMocker();
-        _faker = new Faker();
-        _validator = mocker.CreateInstance<CreateItemValidator>();
-    }
-
     [Fact]
-    public void ItShouldFailIfTitleIsEmpty()
+    public void ItShouldSuccessIfRequestIsValid()
     {
         // Arrange
-        var request = new CreateItemRequest(Title: string.Empty);
+        string title = Faker.RandomString(1, 100);
+        var request = new ItemRequest(title);
 
-        // act
-        Result<CreateItemResponse> result = _validator.ValidateRequest(request);
-
-        // Assert
-        Assert.True(result.IsFailure);
-        Assert.Single(result.Errors);
-    }
-
-    [Fact]
-    public void ItShouldFailIfTitleLenghtIsGreaterThanMaxLength()
-    {
-        // Arrange
-        var request = new CreateItemRequest(_faker.Random.String(101));
-
-        // act
-        Result<CreateItemResponse> result = _validator.ValidateRequest(request);
-
-        // Assert
-        Assert.True(result.IsFailure);
-        Assert.Single(result.Errors);
-    }
-
-    [Fact]
-    public void ItShouldSuccessIfTitleIsValid()
-    {
-        // Arrange
-        short randomLength = _faker.Random.Short(1, 100);
-        string title = _faker.Random.String(randomLength);
-        var request = new CreateItemRequest(title);
-
-        // act
-        Result<CreateItemResponse> result = _validator.ValidateRequest(request);
+        // Act
+        Result<ItemResponse?> result = Validator.ValidateRequest(request);
 
         // Assert
         Assert.True(result.IsSuccess);

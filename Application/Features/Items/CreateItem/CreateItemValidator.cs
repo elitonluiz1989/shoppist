@@ -1,15 +1,8 @@
 ﻿using Application.Features.Items.CreateItem.Interfaces;
-using Application.Shared.Validators;
-using FluentValidation;
+using Application.Features.Items.Shared;
 
 namespace Application.Features.Items.CreateItem;
 
-public sealed class CreateItemValidator : RequestValidator<CreateItemRequest, CreateItemResponse>, ICreateItemValidator
+public sealed class CreateItemValidator : ItemValidator<ItemRequest>, ICreateItemValidator
 {
-    public CreateItemValidator()
-    {
-        RuleFor(x => x.Title)
-            .NotEmpty()
-            .MaximumLength(100);
-    }
 }

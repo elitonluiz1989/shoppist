@@ -5,5 +5,5 @@ namespace Application.Shared.Validators;
 
 public interface IRequestValidator<TRequest, TResponse> : IValidator<TRequest>
 {
-    Result<TResponse> ValidateRequest(TRequest request);
+    Result<TResponse?> ValidateRequest(TRequest? request);
 }
