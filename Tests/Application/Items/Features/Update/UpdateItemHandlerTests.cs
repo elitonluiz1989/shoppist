@@ -1,12 +1,12 @@
-﻿using Application.Features.Items.Shared;
-using Application.Features.Items.UpdateItem;
-using Application.Features.Items.UpdateItem.Interfaces;
+﻿using Application.Items.Features.Update;
+using Application.Items.Interfaces;
+using Application.Items.Shared;
 using Application.Shared.Results;
 using Domain.Entities;
 using Moq;
-using Tests.Application.Features.Items.Shared;
+using Tests.Application.Items.Shared;
 
-namespace Tests.Application.Features.Items.UpdateItem;
+namespace Tests.Application.Items.Features.Update;
 
 public class UpdateItemHandlerTests : ItemHandlerTests<UpdateItemHandler, IUpdateItemValidator, UpdateItemRequest>
 {

@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.Features.Items.Shared;
+namespace Application.Items.Shared;
 
 public static class ItemMap
 {

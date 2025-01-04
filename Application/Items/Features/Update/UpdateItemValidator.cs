@@ -1,8 +1,8 @@
-﻿using Application.Features.Items.Shared;
-using Application.Features.Items.UpdateItem.Interfaces;
+﻿using Application.Items.Interfaces;
+using Application.Items.Shared;
 using FluentValidation;
 
-namespace Application.Features.Items.UpdateItem;
+namespace Application.Items.Features.Update;
 
 public sealed class UpdateItemValidator : ItemValidator<UpdateItemRequest>, IUpdateItemValidator
 {

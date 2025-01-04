@@ -1,6 +1,6 @@
 ﻿using Application.Shared.Results;
 
-namespace Application.Features.Items.Shared;
+namespace Application.Items.Shared;
 
 public static class ItemErrors
 {

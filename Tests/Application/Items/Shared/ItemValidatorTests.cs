@@ -1,9 +1,9 @@
-﻿using Application.Features.Items.Shared;
+﻿using Application.Items.Shared;
 using Application.Shared.Results;
 using Moq.AutoMock;
 using Tests.Helpers;
 
-namespace Tests.Application.Features.Items.Shared;
+namespace Tests.Application.Items.Shared;
 
 public abstract class ItemValidatorTests<TItemValidator, TRequest>
     where TItemValidator : ItemValidator<TRequest>

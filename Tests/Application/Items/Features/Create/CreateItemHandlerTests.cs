@@ -1,12 +1,12 @@
-﻿using Application.Features.Items.CreateItem;
-using Application.Features.Items.CreateItem.Interfaces;
-using Application.Features.Items.Shared;
+﻿using Application.Items.Features.Create;
+using Application.Items.Interfaces;
+using Application.Items.Shared;
 using Application.Shared.Results;
 using Domain.Entities;
 using Moq;
-using Tests.Application.Features.Items.Shared;
+using Tests.Application.Items.Shared;
 
-namespace Tests.Application.Features.Items.CreateItem;
+namespace Tests.Application.Items.Features.Create;
 
 public class CreateItemHandlerTests : ItemHandlerTests<CreateItemHandler, ICreateItemValidator, ItemRequest>
 {

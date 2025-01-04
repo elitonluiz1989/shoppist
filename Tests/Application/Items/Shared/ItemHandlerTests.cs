@@ -1,4 +1,4 @@
-﻿using Application.Features.Items.Shared;
+﻿using Application.Items.Shared;
 using Application.Shared.Interfaces;
 using Application.Shared.Results;
 using Application.Shared.Validators;
@@ -7,7 +7,7 @@ using Domain.Interfaces.Base;
 using Moq;
 using Moq.AutoMock;
 
-namespace Tests.Application.Features.Items.Shared;
+namespace Tests.Application.Items.Shared;
 
 public abstract class ItemHandlerTests<THandler, TValidator, TRequest>
     where THandler : class, IRequestHandler<TRequest, ItemResponse>

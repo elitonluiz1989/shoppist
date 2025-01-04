@@ -1,7 +1,7 @@
 ﻿using Application.Shared.Validators;
 using FluentValidation;
 
-namespace Application.Features.Items.Shared;
+namespace Application.Items.Shared;
 
 public abstract class ItemValidator<TRequest> : RequestValidator<TRequest, ItemResponse>
     where TRequest : ItemRequest

@@ -1,12 +1,12 @@
-﻿using Application.Features.Items.Shared;
-using Application.Features.Items.UpdateItem.Interfaces;
+﻿using Application.Items.Interfaces;
+using Application.Items.Shared;
 using Application.Shared.Handlers;
 using Application.Shared.Results;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Base;
 
-namespace Application.Features.Items.UpdateItem;
+namespace Application.Items.Features.Update;
 
 public sealed class UpdateItemHandler(
     IUnitOfWork unitOfWork,

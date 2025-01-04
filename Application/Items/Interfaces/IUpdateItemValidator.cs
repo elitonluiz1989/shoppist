@@ -1,7 +1,8 @@
-﻿using Application.Features.Items.Shared;
+﻿using Application.Items.Features.Update;
+using Application.Items.Shared;
 using Application.Shared.Validators;
 
-namespace Application.Features.Items.UpdateItem.Interfaces;
+namespace Application.Items.Interfaces;
 
 public interface IUpdateItemValidator : IRequestValidator<UpdateItemRequest, ItemResponse>
 {

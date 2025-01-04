@@ -1,11 +1,11 @@
-﻿using Application.Features.Items.CreateItem.Interfaces;
-using Application.Features.Items.Shared;
+﻿using Application.Items.Interfaces;
+using Application.Items.Shared;
 using Application.Shared.Handlers;
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Interfaces.Base;
 
-namespace Application.Features.Items.CreateItem;
+namespace Application.Items.Features.Create;
 
 public sealed class CreateItemHandler(
     IUnitOfWork unitOfWork,
