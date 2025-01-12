@@ -1,4 +1,5 @@
 ﻿using Application.Items.Features.Create;
+using Application.Items.Features.Delete;
 using Application.Items.Features.Update;
 using Application.Items.Interfaces;
 using Domain.Interfaces;
@@ -22,6 +23,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICreateItemValidator, CreateItemValidator>();
         services.AddScoped<IUpdateItemHandler, UpdateItemHandler>();
         services.AddScoped<IUpdateItemValidator, UpdateItemValidator>();
+        services.AddScoped<IDeleteItemHandler, DeleteItemHandler>();
 
         services.AddScoped<IShoppingListItemRepository, ShoppingListItemRepository>();
         services.AddScoped<IShoppingListRepository, ShoppingListRepository>();
