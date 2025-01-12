@@ -1,5 +1,5 @@
-﻿using Application.Shared.Results;
-using Application.Shared.Validators;
+﻿using Application.Shared.Interfaces;
+using Application.Shared.Results;
 using Domain.Entities.Base;
 using Domain.Interfaces.Base;
 

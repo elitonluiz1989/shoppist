@@ -1,5 +1,5 @@
 ﻿using Application.Items.Shared;
-using Application.Shared.Validators;
+using Application.Shared.Interfaces;
 
 namespace Application.Items.Interfaces;
 

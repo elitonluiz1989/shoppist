@@ -1,6 +1,6 @@
 ﻿using Application.Items.Features.Update;
 using Application.Items.Shared;
-using Application.Shared.Validators;
+using Application.Shared.Interfaces;
 
 namespace Application.Items.Interfaces;
 

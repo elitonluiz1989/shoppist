@@ -1,7 +1,7 @@
 ﻿using Application.Shared.Results;
 using FluentValidation;
 
-namespace Application.Shared.Validators;
+namespace Application.Shared.Interfaces;
 
 public interface IRequestValidator<TRequest, TResponse> : IValidator<TRequest>
 {

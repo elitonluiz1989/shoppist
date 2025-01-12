@@ -1,6 +1,5 @@
 ﻿using Application.Shared.Interfaces;
 using Application.Shared.Results;
-using Application.Shared.Validators;
 using Domain.Entities.Base;
 
 namespace Application.Shared.Handlers;
@@ -14,7 +13,6 @@ public abstract class Handler<TEntity, TRequest, TResponse>(
     public virtual async Task<Result<TResponse?>> HandleAsync(TRequest? request, CancellationToken cancellationToken)
     {
         Result<TResponse?> result = validator.ValidateRequest(request);
-        ;
 
         if (result.IsFailure || request is null)
             return result;

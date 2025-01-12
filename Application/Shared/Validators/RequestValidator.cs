@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using Application.Shared.Interfaces;
 using Application.Shared.Results;
 using FluentValidation;
 

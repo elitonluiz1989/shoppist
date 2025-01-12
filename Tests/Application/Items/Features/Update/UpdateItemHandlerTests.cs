@@ -11,20 +11,20 @@ namespace Tests.Application.Items.Features.Update;
 public class UpdateItemHandlerTests : ItemHandlerTests<UpdateItemHandler, IUpdateItemValidator, UpdateItemRequest>
 {
     [Fact]
-    public async Task ShouldItFailWhenRequestIsNotValid()
+    public async Task ItShouldFailWhenRequestIsNotValid()
     {
         //Arrange
         UpdateItemRequest invalidRequest = new(Guid.Empty, string.Empty);
 
         // Act and Arrange
-        await ShouldItFailWhenRequestIsNotValidBase(invalidRequest);
+        await ItShouldFailWhenRequestIsNotValidBase(invalidRequest);
 
         VerifyFindAsync(Times.Never);
         VerifyUpdateExecution(Times.Never);
     }
 
     [Fact]
-    public async Task ShouldItUpdateItemWhenRequestIsValid()
+    public async Task ItShouldUpdateItemWhenRequestIsValid()
     {
         // Arrange
         Item item = new()

@@ -11,18 +11,18 @@ namespace Tests.Application.Items.Features.Create;
 public class CreateItemHandlerTests : ItemHandlerTests<CreateItemHandler, ICreateItemValidator, ItemRequest>
 {
     [Fact]
-    public async Task ShouldItFailWhenRequestIsNotValid()
+    public async Task ItShouldFailWhenRequestIsNotValid()
     {
         // Arrange
         ItemRequest request = new(string.Empty);
 
         // Act and Assert
-        await ShouldItFailWhenRequestIsNotValidBase(request);
+        await ItShouldFailWhenRequestIsNotValidBase(request);
         VerifyCreateExecution(Times.Never);
     }
 
     [Fact]
-    public async Task ShouldItCreateItemWhenRequestIsValid()
+    public async Task ItShouldCreateItemWhenRequestIsValid()
     {
         // Arrange
         ItemRequest request = new("Item 001");

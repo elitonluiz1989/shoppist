@@ -1,7 +1,6 @@
 ﻿using Application.Items.Shared;
 using Application.Shared.Interfaces;
 using Application.Shared.Results;
-using Application.Shared.Validators;
 using Domain.Interfaces;
 using Domain.Interfaces.Base;
 using Moq;
@@ -28,7 +27,7 @@ public abstract class ItemHandlerTests<THandler, TValidator, TRequest>
         Handler = mocker.CreateInstance<THandler>();
     }
 
-    protected async Task ShouldItFailWhenRequestIsNotValidBase(TRequest invalidRequest)
+    protected async Task ItShouldFailWhenRequestIsNotValidBase(TRequest invalidRequest)
     {
         // Arrange
         CancellationToken cancellationToken = CancellationToken.None;
