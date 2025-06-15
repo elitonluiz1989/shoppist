@@ -3,11 +3,6 @@ package com.elitonluiz1989.shoppist.shared.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
@@ -21,21 +16,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.elitonluiz1989.shoppist.R
-import com.elitonluiz1989.shoppist.home.homeNavigationItem
-import com.elitonluiz1989.shoppist.items.itemsNavigationItem
-import com.elitonluiz1989.shoppist.shared.models.NavigationItem
+import com.elitonluiz1989.shoppist.home.createHomeNavigationItem
+import com.elitonluiz1989.shoppist.items.createItemsNavigationItem
+import com.elitonluiz1989.shoppist.shared.interfaces.Route
 import com.elitonluiz1989.shoppist.shared.models.AppScreens
+import com.elitonluiz1989.shoppist.shared.models.NavigationItem
 
 @Composable
-fun AppDrawer(selectedNavigationItem: AppScreens, onItemClick: (NavigationItem) -> Unit) {
+fun AppDrawer(selectedNavigationItem: AppScreens, onItemClick: (NavigationItem<Route>) -> Unit) {
+    val items = listOf(
+        createHomeNavigationItem(stringResource(R.string.home_sreen_title)),
+        createItemsNavigationItem(stringResource(R.string.items_sreen_title))
+    );
+
     ModalDrawerSheet {
         DrawerHeader()
 
         DrawerBody(
-            items = listOf(
-                homeNavigationItem(),
-                itemsNavigationItem()
-            ),
+            items = items,
             selectedNavigationItem = selectedNavigationItem,
             onItemClick = onItemClick
         )
@@ -61,9 +59,9 @@ private fun DrawerHeader() {
 
 @Composable
 private fun DrawerBody(
-    items: List<NavigationItem>,
+    items: List<NavigationItem<Route>>,
     selectedNavigationItem: AppScreens,
-    onItemClick: (NavigationItem) -> Unit
+    onItemClick: (NavigationItem<Route>) -> Unit
 ) {
     items.forEach { item ->
         NavigationDrawerItem(
@@ -77,7 +75,7 @@ private fun DrawerBody(
 }
 
 @Composable
-private fun ItemIcon(item: NavigationItem, selectedNavigationItem: AppScreens) {
+private fun ItemIcon(item: NavigationItem<Route>, selectedNavigationItem: AppScreens) {
     val icon =
         if (item.id == selectedNavigationItem) { item.selectedIcon }
         else { item.unSelectedIcon }

@@ -7,7 +7,7 @@ enum class AppScreens {
     Items
 }
 
-data class NavigationItem(
+data class NavigationItem<out Route>(
     val id: AppScreens,
     val title: String,
     val selectedIcon: ImageVector,

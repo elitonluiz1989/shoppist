@@ -7,21 +7,19 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.elitonluiz1989.shoppist.home.HomeRoute
 import com.elitonluiz1989.shoppist.home.HomeScreen
-import com.elitonluiz1989.shoppist.home.homeNavigationItem
+import com.elitonluiz1989.shoppist.items.ItemsRoute
 import com.elitonluiz1989.shoppist.items.ItemsSreem
-import com.elitonluiz1989.shoppist.items.itemsRoute
 
 @Composable
 fun Navigation(navController: NavHostController, innerPadding: PaddingValues) {
-    val homeRoute = homeNavigationItem().route.value
-
     NavHost(
         navController = navController,
-        startDestination = homeRoute,
+        startDestination = HomeRoute,
         modifier = Modifier.padding(innerPadding)
     ) {
-        composable(route = homeRoute) { HomeScreen() }
-        composable(route = itemsRoute.value) { ItemsSreem() }
+        composable<HomeRoute> { HomeScreen() }
+        composable<ItemsRoute>{ ItemsSreem() }
     }
 }

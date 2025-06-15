@@ -92,7 +92,7 @@ private fun DrawerContent(
         onItemClick = { item ->
             onItemClick(item.id)
 
-            navController.navigate(item.route.value) {
+            navController.navigate(item.route) {
                 popUpTo(navController.graph.startDestinationId) {
                     saveState = true
                 }
