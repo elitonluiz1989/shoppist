@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Shoppist"
 include(":app")
+include(":domain")
+include(":infrastructure")
