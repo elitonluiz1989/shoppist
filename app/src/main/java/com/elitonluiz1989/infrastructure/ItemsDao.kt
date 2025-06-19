@@ -1,11 +1,10 @@
-package com.elitonluiz1989.infrastructure.daos
+package com.elitonluiz1989.infrastructure
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.elitonluiz1989.infrastructure.entities.ItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

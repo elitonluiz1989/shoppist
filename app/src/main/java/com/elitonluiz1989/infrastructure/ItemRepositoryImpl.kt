@@ -1,9 +1,7 @@
-package com.elitonluiz1989.infrastructure.repositories
+package com.elitonluiz1989.infrastructure
 
-import com.elitonluiz1989.domain.items.Item
-import com.elitonluiz1989.domain.items.ItemRepository
-import com.elitonluiz1989.infrastructure.daos.ItemsDao
-import com.elitonluiz1989.infrastructure.entities.ItemEntity
+import com.elitonluiz1989.domain.Item
+import com.elitonluiz1989.domain.ItemRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

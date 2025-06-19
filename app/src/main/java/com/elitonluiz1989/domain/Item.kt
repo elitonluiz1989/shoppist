@@ -1,3 +1,3 @@
-package com.elitonluiz1989.domain.items
+package com.elitonluiz1989.domain
 
 data class Item(val id: Long, val name: String)

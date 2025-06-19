@@ -2,8 +2,8 @@ package com.elitonluiz1989.infrastructure.di
 
 import android.content.Context
 import androidx.room.Room
-import com.elitonluiz1989.infrastructure.databases.AppDatabase
-import com.elitonluiz1989.infrastructure.daos.ItemsDao
+import com.elitonluiz1989.infrastructure.AppDatabase
+import com.elitonluiz1989.infrastructure.ItemsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

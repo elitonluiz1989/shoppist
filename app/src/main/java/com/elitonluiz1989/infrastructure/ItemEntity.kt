@@ -1,9 +1,9 @@
-package com.elitonluiz1989.infrastructure.entities
+package com.elitonluiz1989.infrastructure
 
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.elitonluiz1989.domain.items.Item
+import com.elitonluiz1989.domain.Item
 
 @Entity(
     tableName = "items",

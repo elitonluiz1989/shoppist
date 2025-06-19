@@ -2,8 +2,8 @@ package com.elitonluiz1989.shoppist.items
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elitonluiz1989.domain.items.Item
-import com.elitonluiz1989.domain.items.ItemRepository
+import com.elitonluiz1989.domain.Item
+import com.elitonluiz1989.domain.ItemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

@@ -1,4 +1,4 @@
-package com.elitonluiz1989.domain.items
+package com.elitonluiz1989.domain
 
 import kotlinx.coroutines.flow.Flow
 
