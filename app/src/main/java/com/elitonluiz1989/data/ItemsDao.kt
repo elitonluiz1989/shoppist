@@ -1,4 +1,4 @@
-package com.elitonluiz1989.infrastructure
+package com.elitonluiz1989.data
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemsDao {
-    @Query("select id, name from items")
+    @Query("select * from items")
     fun getAll(): Flow<List<ItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

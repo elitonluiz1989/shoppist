@@ -1,4 +1,4 @@
-package com.elitonluiz1989.infrastructure
+package com.elitonluiz1989.data
 
 import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.domain.ItemRepository
