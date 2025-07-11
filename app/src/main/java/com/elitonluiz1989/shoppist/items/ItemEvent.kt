@@ -8,5 +8,6 @@ sealed class ItemEvent {
     data class UpdateName(val value: String) : ItemEvent()
     data class UpdateQuantity(val value: String) : ItemEvent()
     data class UpdatePrice(val value: String) : ItemEvent()
+    data class UpdateForm(val value: Item) : ItemEvent()
     object Load : ItemEvent()
 }

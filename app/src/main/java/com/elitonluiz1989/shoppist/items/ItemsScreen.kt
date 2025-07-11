@@ -17,6 +17,7 @@ import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.shoppist.items.components.ErrorMessage
 import com.elitonluiz1989.shoppist.items.components.ItemForm
 import com.elitonluiz1989.shoppist.items.components.ItemsList
+import com.elitonluiz1989.shoppist.items.components.ItemsTotalBar
 import com.elitonluiz1989.shoppist.items.components.Loading
 
 @Composable
@@ -55,7 +56,6 @@ private fun ItemContent(
             .fillMaxSize()
             .padding(paddingValues)
     ) {
-
         if (state.isLoading) {
             Loading()
 
@@ -68,6 +68,17 @@ private fun ItemContent(
 
         ErrorMessage(state)
 
-        ItemsList(state, onEvent)
+        Column(modifier = Modifier.fillMaxSize()) {
+            ItemsList(
+                state = state,
+                onEvent = onEvent,
+                modifier = Modifier.weight(1f)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ItemsTotalBar(state = state)
+        }
     }
 }
+

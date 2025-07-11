@@ -2,26 +2,31 @@ package com.elitonluiz1989.shoppist.items.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.shoppist.R
 import com.elitonluiz1989.shoppist.items.ItemEvent
 import com.elitonluiz1989.shoppist.items.ItemState
-import com.elitonluiz1989.shoppist.shared.CurrencyVisualTransformation
 
 @Composable
 fun ItemForm(
@@ -36,10 +41,13 @@ fun ItemForm(
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
             ),
+            textStyle = TextStyle(fontSize = 14.sp),
             modifier = Modifier.fillMaxWidth()
         )
 
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             OutlinedTextField(
                 value = state.quantity,
                 onValueChange = { onEvent(ItemEvent.UpdateQuantity(it)) },
@@ -48,8 +56,9 @@ fun ItemForm(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
+                singleLine = true,
                 modifier = Modifier
-                    .weight(0.3f)
+                    .weight(1f)
                     .padding(end = 8.dp)
             )
 
@@ -61,19 +70,25 @@ fun ItemForm(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 ),
-                visualTransformation = CurrencyVisualTransformation(),
-                modifier = Modifier.weight(0.7f)
+                textStyle = TextStyle(textAlign = TextAlign.End),
+                modifier = Modifier.weight(3f)
             )
-        }
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Button(
+                shape = RoundedCornerShape(size = 5.dp),
+                onClick = {
+                    addEvent(state, onEvent)
+                },
+                modifier = Modifier
+                    .height(64.dp)
+                    .padding(top = 8.dp, start = 8.dp)
 
-        Button(
-            onClick = {
-                addEvent(state, onEvent)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.add)
+                )
             }
-        ) {
-            Text(stringResource(R.string.add))
         }
     }
 }

@@ -32,7 +32,7 @@ class ItemViewModel @Inject constructor(
 
             is ItemEvent.UpdateQuantity -> {
                 if (event.value.any { it.isDigit() == false }) {
-                    return;
+                    return
                 }
 
                 _state.value = _state.value.copy(quantity = event.value)
@@ -40,7 +40,7 @@ class ItemViewModel @Inject constructor(
 
             is ItemEvent.UpdatePrice -> {
                 if (event.value.matches(Regex("^\\d*([.,])?\\d{0,2}$")) == false) {
-                    return;
+                    return
                 }
 
                 _state.value = _state.value.copy(price = event.value)
@@ -50,6 +50,7 @@ class ItemViewModel @Inject constructor(
                 viewModelScope.launch {
                     repository.upsert(event.item)
 
+                    _state.value = _state.value.copy(id = 0)
                     _state.value = _state.value.copy(name = "")
                     _state.value = _state.value.copy(quantity = "")
                     _state.value = _state.value.copy(price = "")
@@ -64,6 +65,13 @@ class ItemViewModel @Inject constructor(
 
                     loadItems()
                 }
+            }
+
+            is ItemEvent.UpdateForm -> {
+                _state.value = _state.value.copy(id = event.value.id)
+                _state.value = _state.value.copy(name = event.value.name)
+                _state.value = _state.value.copy(quantity = event.value.quantity.toString())
+                _state.value = _state.value.copy(price = event.value.price.toString())
             }
         }
     }

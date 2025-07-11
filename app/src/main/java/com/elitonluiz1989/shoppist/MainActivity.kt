@@ -13,7 +13,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import com.elitonluiz1989.shoppist.components.TopAppBar
 import com.elitonluiz1989.shoppist.items.ItemsScreen
 import com.elitonluiz1989.shoppist.ui.theme.ShoppistTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,8 +32,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(16.dp)
-                            .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        topBar = { TopAppBar() }
+                            .nestedScroll(scrollBehavior.nestedScrollConnection)
                     ) { innerPadding ->
                         ItemsScreen(innerPadding)
                     }

@@ -4,9 +4,10 @@ import com.elitonluiz1989.domain.Item
 
 data class ItemState(
     val items: List<Item> = emptyList(),
-    val name: String = "",
-    val quantity: String = "",
-    val price: String = "",
+    val id: Long = 0,
+    val name: String = "Item",
+    val quantity: String = "1",
+    val price: String = "0",
     val isLoading: Boolean = false,
     val error: String? = null
 )
