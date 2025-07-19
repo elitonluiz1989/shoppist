@@ -1,26 +1,21 @@
 package com.elitonluiz1989.shoppist.items.components
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.elitonluiz1989.shoppist.items.ItemEvent
 import com.elitonluiz1989.shoppist.items.ItemState
@@ -38,47 +33,19 @@ fun ItemsList(
 
     LazyColumn(
         state = listState,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color.White)
+            .padding(horizontal = 8.dp)
     ) {
         itemsIndexed(state.items) { index, item ->
-            if (index > 0) {
-                Spacer(
-                    modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp)
-                )
-            }
+            RowSpacer()
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Color.Gray, MaterialTheme.shapes.small)
-                    .padding(10.dp)
-                    .combinedClickable(
-                        onClick = { },
-                        onLongClick = {
-                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                            onEvent(ItemEvent.UpdateForm(item))
-                        },
-                        onDoubleClick = {
-                            onEvent(ItemEvent.UpdateForm(item))
-                        }
-                    )
+            ItemRow(haptics, onEvent, item)
 
-            ) {
-                TextColumn(
-                    item.name,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(3f)
-                )
-
-                TextColumn(
-                    item.total.toString(),
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.weight(1f)
-                )
-            }
+            if (index == state.items.lastIndex)
+                RowSpacer()
         }
     }
 
@@ -92,19 +59,10 @@ fun ItemsList(
 }
 
 @Composable
-private fun TextColumn(
-    text: String,
-    textAlign: TextAlign = TextAlign.Start,
-    maxLines: Int = 1,
-    overflow: TextOverflow = TextOverflow.Visible,
-    modifier: Modifier
-) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.bodyLarge,
-        textAlign = textAlign,
-        maxLines = maxLines,
-        overflow = overflow,
-        modifier = modifier
+private fun RowSpacer() {
+    Spacer(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp)
     )
 }

@@ -2,9 +2,8 @@ package com.elitonluiz1989.shoppist.items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,11 +13,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.elitonluiz1989.domain.Item
-import com.elitonluiz1989.shoppist.items.components.ErrorMessage
 import com.elitonluiz1989.shoppist.items.components.ItemForm
 import com.elitonluiz1989.shoppist.items.components.ItemsList
 import com.elitonluiz1989.shoppist.items.components.ItemsTotalBar
-import com.elitonluiz1989.shoppist.items.components.Loading
+import com.elitonluiz1989.shoppist.items.shared.Loading
 
 @Composable
 fun ItemsScreen(paddingValues: PaddingValues) {
@@ -55,30 +53,24 @@ private fun ItemContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
+            .padding(horizontal = 2.dp)
     ) {
+        ItemForm(
+            state = state,
+            onEvent = onEvent
+        )
+
         if (state.isLoading) {
             Loading()
-
-            return
-        }
-
-        ItemForm(state, onEvent)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ErrorMessage(state)
-
-        Column(modifier = Modifier.fillMaxSize()) {
+        } else {
             ItemsList(
                 state = state,
                 onEvent = onEvent,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.fillMaxWidth().weight(1f)
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            ItemsTotalBar(state = state)
         }
+
+        ItemsTotalBar(state = state)
     }
 }
 
