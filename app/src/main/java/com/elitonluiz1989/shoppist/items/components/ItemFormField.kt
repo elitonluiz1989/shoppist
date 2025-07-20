@@ -8,6 +8,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,11 +20,13 @@ import com.elitonluiz1989.shoppist.items.shared.TextResource
 fun ItemFormField(
     value: String,
     onValueChange: (String) -> Unit,
+    onFocusChanged: () -> Unit,
     @StringRes label: Int,
     keyboardOptions: KeyboardOptions,
     modifier: Modifier = Modifier,
     singleLine: Boolean = true,
     textStyle: TextStyle = TextStyle(),
+    isError: Boolean = false
 ) {
     TextField(
         value = value,
@@ -43,7 +46,13 @@ fun ItemFormField(
             focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
         ),
+        isError = isError,
         modifier = modifier
+            .onFocusChanged {
+                if (it.isFocused) {
+                    onFocusChanged()
+                }
+            }
     )
 }
 
@@ -53,6 +62,7 @@ fun ItemFormFieldPreview() {
     ItemFormField(
         value = "Item 001",
         onValueChange = {},
+        onFocusChanged = {},
         label = R.string.items_screen_form_name,
         keyboardOptions = KeyboardOptions.Default,
     )

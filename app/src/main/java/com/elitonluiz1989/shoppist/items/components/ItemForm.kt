@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -28,12 +29,14 @@ fun ItemForm(
             .fillMaxWidth()
     ) {
         ItemFormField(
-            value = state.name,
+            value = state.form.name,
             onValueChange = { onEvent(ItemEvent.UpdateName(it)) },
+            onFocusChanged = { onEvent(ItemEvent.MarkFormAsTouched) },
             label = R.string.items_screen_form_name,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
             ),
+            isError = state.form.nameInvalid,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -43,27 +46,31 @@ fun ItemForm(
                 .padding(top = 8.dp)
         ) {
             ItemFormField(
-                value = state.quantity,
+                value = state.form.quantity,
                 onValueChange = { onEvent(ItemEvent.UpdateQuantity(it)) },
+                onFocusChanged = { onEvent(ItemEvent.MarkFormAsTouched) },
                 label = R.string.items_screen_form_quantity,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
                 ),
                 textStyle = TextStyle(textAlign = TextAlign.End),
+                isError = state.form.quantityInvalid,
                 modifier = Modifier
                     .weight(1f)
             )
 
             ItemFormField(
-                value = state.price,
+                value = state.form.price,
                 onValueChange = { onEvent(ItemEvent.UpdatePrice(it)) },
+                onFocusChanged = { onEvent(ItemEvent.MarkFormAsTouched) },
                 label = R.string.items_screen_form_price,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 ),
                 textStyle = TextStyle(textAlign = TextAlign.End),
+                isError = state.form.priceInvalid,
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .weight(3f)

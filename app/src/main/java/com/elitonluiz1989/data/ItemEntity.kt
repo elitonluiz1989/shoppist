@@ -8,7 +8,7 @@ import java.math.BigDecimal
 
 @Entity(
     tableName = "items",
-    indices = [Index(value = ["name"], unique = true) ]
+    indices = [Index(value = ["name"]) ]
 )
 data class ItemEntity(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,

@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.shoppist.R
 import com.elitonluiz1989.shoppist.items.ItemEvent
 import com.elitonluiz1989.shoppist.items.ItemState
@@ -30,10 +29,9 @@ fun ItemFormButton(
     Button(
         shape = RoundedCornerShape(size = 5.dp),
         onClick = {
-            addEvent(state, onEvent)
+            addEvent(onEvent)
         },
         modifier = Modifier.height(56.dp)
-
     ) {
         Icon(
             imageVector = icon,
@@ -56,36 +54,17 @@ fun ItemFormButtonPreview() {
 
 @Composable
 private fun handleIcon(state: ItemState): ImageVector {
-    return if (state.id == 0.toLong()) {
-        Icons.Filled.Add
-    } else {
-        Icons.Filled.Done
-    }
+    return if (state.form.idValid) Icons.Filled.Done
+        else Icons.Filled.Add
 }
 
 @Composable
 private fun handleContentDescription(state: ItemState): Int {
-    return if (state.id == 0.toLong()) {
-        R.string.add
-    } else {
-        R.string.update
-    }
+    return if (state.form.idValid) R.string.update
+        else R.string.add
 }
 
-private fun addEvent(
-    state: ItemState,
-    onEvent: (ItemEvent) -> Unit
-) {
-    val item = Item(
-        id = state.id,
-        name = state.name,
-        quantity = state.quantity.toShort(),
-        price = state.priceBigDecimal
-    )
-
-    if (!item.validate()) return
-
-    onEvent(
-        ItemEvent.Add(item)
-    )
+private fun addEvent(onEvent: (ItemEvent) -> Unit) {
+    onEvent(ItemEvent.MarkFormAsTouched)
+    onEvent(ItemEvent.Add)
 }
