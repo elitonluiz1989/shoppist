@@ -8,4 +8,6 @@
     <string name="items_screen_form_quantity">Qtd</string>
     <string name="items_screen_form_price">Price</string>
     <string name="items_screen_total">Total:</string>
+    <string name="items_screen_item_removed">Item removed</string>
+    <string name="items_screen_item_removed_undo">Undo</string>
 </resources>

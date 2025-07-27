@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,11 +23,19 @@ import com.elitonluiz1989.shoppist.items.components.ItemsTotalBar
 import com.elitonluiz1989.shoppist.items.shared.Loading
 
 @Composable
-fun ItemsScreen(paddingValues: PaddingValues) {
+fun ItemsScreen(
+    snackbarHostState: SnackbarHostState,
+    paddingValues: PaddingValues
+) {
     val viewModel: ItemViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    ItemContent(state, viewModel::onEvent, paddingValues)
+    ItemContent(
+        state,
+        viewModel::onEvent,
+        snackbarHostState,
+        paddingValues
+    )
 }
 
 @Preview(showBackground = true)
@@ -42,6 +51,7 @@ fun ItemsScreenPreview() {
     ItemContent(
         state = state,
         onEvent = {},
+        snackbarHostState = SnackbarHostState(),
         paddingValues = PaddingValues(16.dp)
     )
 }
@@ -50,6 +60,7 @@ fun ItemsScreenPreview() {
 private fun ItemContent(
     state: ItemState,
     onEvent: (ItemEvent) -> Unit,
+    snackbarHostState: SnackbarHostState,
     paddingValues: PaddingValues
 ) {
     Column(
@@ -80,6 +91,7 @@ private fun ItemContent(
             ItemsList(
                 state = state,
                 onEvent = onEvent,
+                snackbarHostState = snackbarHostState,
                 modifier = Modifier.fillMaxWidth().weight(1f)
             )
         }

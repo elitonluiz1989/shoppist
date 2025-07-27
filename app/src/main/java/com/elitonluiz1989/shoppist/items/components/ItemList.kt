@@ -1,14 +1,13 @@
 package com.elitonluiz1989.shoppist.items.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,6 +24,7 @@ import kotlinx.coroutines.launch
 fun ItemsList(
     state: ItemState,
     onEvent: (ItemEvent) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
@@ -35,34 +35,28 @@ fun ItemsList(
         state = listState,
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
             .background(Color.White)
             .padding(horizontal = 8.dp)
     ) {
-        itemsIndexed(state.items) { index, item ->
-            RowSpacer()
-
-            ItemRow(haptics, onEvent, item)
-
-            if (index == state.items.lastIndex)
-                RowSpacer()
+        items(
+            items = state.items,
+            key = { item -> item.id },
+        ) { item ->
+            ItemRow(
+                snackbarHostState = snackbarHostState,
+                haptics = haptics,
+                onEvent = onEvent,
+                item = item
+            )
         }
     }
 
     LaunchedEffect(state.items.size) {
-        if (state.items.isNotEmpty()) {
-            coroutineScope.launch {
-                listState.animateScrollToItem(state.items.lastIndex)
-            }
+        if (state.items.isEmpty()) return@LaunchedEffect
+
+        coroutineScope.launch {
+            listState.animateScrollToItem(state.items.lastIndex)
         }
     }
-}
-
-@Composable
-private fun RowSpacer() {
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp)
-    )
 }

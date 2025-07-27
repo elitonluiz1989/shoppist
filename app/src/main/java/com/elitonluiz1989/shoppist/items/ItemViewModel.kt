@@ -9,8 +9,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -26,95 +28,72 @@ class ItemViewModel @Inject constructor(
         price = BigDecimal.ZERO
     )
 
-    private val _state = MutableStateFlow(ItemState(
-        form = ItemFormData(
-            id = _defaultItem.id,
-            name = _defaultItem.name,
-            quantity = _defaultItem.quantity.toString(),
-            price = ""
+    private val _state = MutableStateFlow(
+        ItemState(
+            form = ItemFormData(
+                id = _defaultItem.id,
+                name = _defaultItem.name,
+                quantity = _defaultItem.quantity.toString(),
+                price = ""
+            )
         )
-    ))
-    val state: StateFlow<ItemState> = _state
+    )
+    val state: StateFlow<ItemState> = _state.asStateFlow()
+
+    private val priceRegex = Regex("^\\d*([.,])?\\d{0,2}$")
 
     init {
-        onEvent(ItemEvent.Load)
+        observeItems()
         observeQuantity()
     }
 
     fun onEvent(event: ItemEvent) {
         when (event) {
-            is ItemEvent.UpdateId -> {
-                _state.value = _state.value.copy(
-                    form = _state.value.form.copy(id = event.value)
-                )
-            }
-
-            is ItemEvent.UpdateName -> {
-                _state.value = _state.value.copy(
-                    form = _state.value.form.copy(name = event.value)
-                )
-            }
-
-            is ItemEvent.UpdateQuantity -> {
-                updateQuantity(event)
-            }
-
-            is ItemEvent.UpdatePrice -> {
-                updatePrice(event)
-            }
-
-            is ItemEvent.UpdateForm -> {
-                updateForm(event)
-            }
-
-            is ItemEvent.MarkFormAsTouched -> {
-                _state.value = _state.value.copy(
-                    form = _state.value.form.copy(formTouched = true)
-                )
-            }
-
-            is ItemEvent.Add -> {
-                add()
-            }
-
-            is ItemEvent.Delete -> {
-                delete(event)
-            }
-
-            is ItemEvent.Load -> {
-                loadItems()
-            }
+            is ItemEvent.UpdateId -> updateId(event.value)
+            is ItemEvent.UpdateName -> updateName(event.value)
+            is ItemEvent.UpdateQuantity -> updateQuantity(event.value)
+            is ItemEvent.UpdatePrice -> updatePrice(event.value)
+            is ItemEvent.UpdateForm -> updateForm(event.value)
+            is ItemEvent.MarkFormAsTouched -> markFormTouched()
+            is ItemEvent.Add -> add()
+            is ItemEvent.Delete -> delete(event)
         }
     }
 
-    private fun updateQuantity(event: ItemEvent.UpdateQuantity) {
-        if (event.value.any { it.isDigit() == false }) {
-            return
-        }
-
-        _state.value = _state.value.copy(
-            form = _state.value.form.copy(quantity = event.value)
-        )
+    private fun updateId(value: Long) {
+        _state.update { it.copy(form = it.form.copy(id = value)) }
     }
 
-    private fun updatePrice(event: ItemEvent.UpdatePrice) {
-        if (event.value.matches(Regex("^\\d*([.,])?\\d{0,2}$")) == false) return
-
-        _state.value = _state.value.copy(
-            form = _state.value.form.copy(price = event.value)
-        )
+    private fun updateName(value: String) {
+        _state.update { it.copy(form = it.form.copy(name = value)) }
     }
 
-    private fun updateForm(event: ItemEvent.UpdateForm) {
-        onEvent(ItemEvent.UpdateId(event.value.id))
-        onEvent(ItemEvent.UpdateName(event.value.name))
-        onEvent(ItemEvent.UpdateQuantity(event.value.quantity.toString()))
+    private fun updateQuantity(value: String) {
+        if (value.any { it.isDigit() == false }) return
+
+        _state.update { it.copy(form = it.form.copy(quantity = value)) }
+    }
+
+    private fun updatePrice(value: String) {
+        if (value.matches(priceRegex) == false) return
+
+        _state.update { it.copy( form = it.form.copy(price = value)) }
+    }
+
+    private fun updateForm(value: Item) {
+        onEvent(ItemEvent.UpdateId(value.id))
+        onEvent(ItemEvent.UpdateName(value.name))
+        onEvent(ItemEvent.UpdateQuantity(value.quantity.toString()))
 
         val price =
-            if (event.value.price > BigDecimal.ZERO) event.value.price.toString()
+            if (value.price > BigDecimal.ZERO) value.price.toString()
             else ""
 
         onEvent(ItemEvent.UpdatePrice(price))
+    }
+
+    private fun markFormTouched() {
+        _state.update { it.copy(form = it.form.copy(formTouched = true)) }
     }
 
     private fun add() {
@@ -131,28 +110,19 @@ class ItemViewModel @Inject constructor(
             repository.upsert(item)
 
             onEvent(ItemEvent.UpdateForm(_defaultItem))
-            loadItems()
         }
     }
 
     private fun delete(event: ItemEvent.Delete) {
         viewModelScope.launch {
             repository.delete(event.item)
-
-            loadItems()
         }
     }
 
-    private fun loadItems() {
+    private fun observeItems() {
         viewModelScope.launch {
-            try {
-                _state.value = _state.value.copy(isLoading = true)
-
-                repository.getAll().collect { items ->
-                    _state.value = _state.value.copy(items = items, isLoading = false)
-                }
-            } catch (e: Exception) {
-                _state.value = _state.value.copy(error = e.message, isLoading = false)
+            repository.getAll().collect { allItems ->
+                _state.update { it.copy(items = allItems) }
             }
         }
     }
@@ -162,8 +132,10 @@ class ItemViewModel @Inject constructor(
             state
                 .map { it.form.quantityInvalid }
                 .distinctUntilChanged()
-                .collect {
-                    _state.value = _state.value.copy(error = if (it) "The quantity must be between 1 and 99" else null)
+                .collect { value ->
+                    val error = if (value) "The quantity must be between 1 and 99" else null
+
+                    _state.update { it.copy(error = error) }
                 }
         }
     }

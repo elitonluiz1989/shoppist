@@ -9,7 +9,6 @@ sealed class ItemEvent {
     data class UpdatePrice(val value: String) : ItemEvent()
     data class UpdateForm(val value: Item) : ItemEvent()
     object MarkFormAsTouched: ItemEvent()
-    object Load : ItemEvent()
     object Add : ItemEvent()
     data class Delete(val item: Item) : ItemEvent()
 }

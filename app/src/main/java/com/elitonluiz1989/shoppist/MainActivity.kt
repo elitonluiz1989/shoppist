@@ -7,7 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.elitonluiz1989.shoppist.items.ItemsScreen
 import com.elitonluiz1989.shoppist.ui.theme.ShoppistTheme
@@ -22,10 +25,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             ShoppistTheme {
                 Surface(modifier = Modifier.fillMaxSize()){
+                    val snackbarHostState = remember { SnackbarHostState() }
+
                     Scaffold(
+                        snackbarHost = { SnackbarHost(snackbarHostState) },
                         modifier = Modifier.fillMaxSize()
                     ) { innerPadding ->
-                        ItemsScreen(paddingValues = innerPadding)
+                        ItemsScreen(
+                            snackbarHostState = snackbarHostState,
+                            paddingValues = innerPadding
+                        )
                     }
                 }
             }

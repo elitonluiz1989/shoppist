@@ -4,13 +4,14 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemsDao {
-    @Query("select * from items")
-    fun getAll(): Flow<List<ItemEntity>>
+    @RawQuery(observedEntities = [ItemEntity::class])
+    fun getAll(sql: SupportSQLiteQuery): Flow<List<ItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(itemEntity: ItemEntity)
