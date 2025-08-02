@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.elitonluiz1989.domain.Item
-import java.math.BigDecimal
 
 @Entity(
     tableName = "items",
@@ -14,7 +13,7 @@ data class ItemEntity(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var name: String,
     var quantity: Short,
-    var price: BigDecimal
+    var price: Int
 ) {
     fun toItem(): Item = Item(id = id, name = name, quantity = quantity, price = price)
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.domain.ItemRepository
+import com.elitonluiz1989.shoppist.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +25,7 @@ class ItemViewModel @Inject constructor(
         id = 0,
         name = "Item",
         quantity = 1,
-        price = BigDecimal.ZERO
+        price = 0
     )
 
     private val _state = MutableStateFlow(
@@ -86,7 +86,7 @@ class ItemViewModel @Inject constructor(
         onEvent(ItemEvent.UpdateQuantity(value.quantity.toString()))
 
         val price =
-            if (value.price > BigDecimal.ZERO) value.price.toString()
+            if (value.price > 0) value.price.toString()
             else ""
 
         onEvent(ItemEvent.UpdatePrice(price))
@@ -133,7 +133,7 @@ class ItemViewModel @Inject constructor(
                 .map { it.form.quantityInvalid }
                 .distinctUntilChanged()
                 .collect { value ->
-                    val error = if (value) "The quantity must be between 1 and 99" else null
+                    val error = if (value) R.string.items_screen_quantity_range_validation else null
 
                     _state.update { it.copy(error = error) }
                 }

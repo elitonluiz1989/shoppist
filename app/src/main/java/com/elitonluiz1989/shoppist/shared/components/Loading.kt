@@ -1,4 +1,4 @@
-package com.elitonluiz1989.shoppist.items.shared
+package com.elitonluiz1989.shoppist.shared.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

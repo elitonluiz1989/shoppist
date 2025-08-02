@@ -1,7 +1,5 @@
 package com.elitonluiz1989.shoppist.items
 
-import java.math.BigDecimal
-
 data class ItemFormData (
     val id: Long = 0,
     val name: String = "",
@@ -15,8 +13,8 @@ data class ItemFormData (
     val quantityConverted: Short
         get() = quantity.toShortOrNull() ?: 0
 
-    val priceConverted: BigDecimal
-        get() = price.toBigDecimalOrNull() ?: BigDecimal.ZERO
+    val priceConverted: Int
+        get() = price.toIntOrNull() ?: 0
 
     val nameInvalid: Boolean
         get() = formTouched && !validateName()
@@ -35,10 +33,10 @@ data class ItemFormData (
     }
 
     private fun validateQuantity(): Boolean {
-        return quantityConverted > 0 && quantityConverted <= 100
+        return quantityConverted > 0 && quantityConverted < 100
     }
 
     private fun validatePrice(): Boolean {
-        return priceConverted > BigDecimal.ZERO
+        return priceConverted > 0
     }
 }

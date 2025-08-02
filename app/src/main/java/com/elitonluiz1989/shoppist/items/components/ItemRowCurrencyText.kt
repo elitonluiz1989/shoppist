@@ -1,24 +1,24 @@
-package com.elitonluiz1989.shoppist.items.components
-
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import com.elitonluiz1989.shoppist.items.components.ItemRowText
+import com.elitonluiz1989.shoppist.shared.currencyFormatter
+import com.elitonluiz1989.shoppist.shared.getCurrentLocale
 
 @Composable
-fun ItemRowText(
+fun ItemRowCurrencyText(
     text: String,
     textAlign: TextAlign = TextAlign.Start,
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Visible,
     modifier: Modifier = Modifier
 ) {
-    Text(
-        text = text,
-        color = MaterialTheme.colorScheme.secondary,
-        style = MaterialTheme.typography.bodyLarge,
+    val locale = getCurrentLocale()
+    val textFormatted = currencyFormatter(text, locale)
+
+    ItemRowText(
+        text = textFormatted,
         textAlign = textAlign,
         maxLines = maxLines,
         overflow = overflow,

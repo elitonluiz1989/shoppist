@@ -6,5 +6,5 @@ data class ItemState(
     val items: List<Item> = emptyList(),
     val form: ItemFormData = ItemFormData(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: Int? = null
 )

@@ -1,5 +1,6 @@
 package com.elitonluiz1989.shoppist.items.components
 
+import com.elitonluiz1989.shoppist.shared.CurrencyVisualTransformation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -70,6 +71,7 @@ fun ItemForm(
                 ),
                 textStyle = TextStyle(textAlign = TextAlign.End),
                 isError = state.form.priceInvalid,
+                visualTransformation = CurrencyVisualTransformation(),
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .weight(3f)

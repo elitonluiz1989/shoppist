@@ -1,13 +1,11 @@
 package com.elitonluiz1989.domain
 
-import java.math.BigDecimal
-
 data class Item(
     val id: Long,
     val name: String,
     val quantity: Short,
-    val price: BigDecimal
+    val price: Int
 ) {
-    val total: BigDecimal
-        get() = BigDecimal.valueOf(quantity.toLong()) * price
+    val total: Int
+        get() = quantity * price
 }

@@ -1,4 +1,4 @@
-package com.elitonluiz1989.shoppist.items.shared
+package com.elitonluiz1989.shoppist.shared.components
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.MaterialTheme

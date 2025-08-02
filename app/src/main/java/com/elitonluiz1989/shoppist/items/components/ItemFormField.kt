@@ -11,10 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.elitonluiz1989.shoppist.R
-import com.elitonluiz1989.shoppist.items.shared.TextResource
+import com.elitonluiz1989.shoppist.shared.components.TextResource
 
 @Composable
 fun ItemFormField(
@@ -26,7 +27,8 @@ fun ItemFormField(
     modifier: Modifier = Modifier,
     singleLine: Boolean = true,
     textStyle: TextStyle = TextStyle(),
-    isError: Boolean = false
+    isError: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     TextField(
         value = value,
@@ -47,6 +49,8 @@ fun ItemFormField(
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
         ),
         isError = isError,
+
+        visualTransformation = visualTransformation,
         modifier = modifier
             .onFocusChanged {
                 if (it.isFocused) {

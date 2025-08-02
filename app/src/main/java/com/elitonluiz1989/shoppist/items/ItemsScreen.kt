@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,7 +21,7 @@ import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.shoppist.items.components.ItemForm
 import com.elitonluiz1989.shoppist.items.components.ItemsList
 import com.elitonluiz1989.shoppist.items.components.ItemsTotalBar
-import com.elitonluiz1989.shoppist.items.shared.Loading
+import com.elitonluiz1989.shoppist.shared.components.Loading
 
 @Composable
 fun ItemsScreen(
@@ -43,8 +44,8 @@ fun ItemsScreen(
 fun ItemsScreenPreview() {
     val state = ItemState(
         items = listOf(
-            Item(id = 1, name = "Item 1", quantity = 1, price = 25.75.toBigDecimal()),
-            Item(id = 2, name = "Item 2", quantity = 1, price = 10.00.toBigDecimal())
+            Item(id = 1, name = "Item 1", quantity = 1, price = 2575),
+            Item(id = 2, name = "Item 2", quantity = 1, price = 1000)
         )
     )
 
@@ -76,7 +77,7 @@ private fun ItemContent(
 
         if (state.error != null) {
             Text(
-                text = state.error,
+                text = stringResource(id = state.error),
                 textAlign = TextAlign.Center,
                 color = Color.Red,
                 modifier = Modifier

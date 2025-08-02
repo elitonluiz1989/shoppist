@@ -1,5 +1,6 @@
 package com.elitonluiz1989.shoppist.items.components
 
+import ItemRowCurrencyText
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
@@ -173,7 +174,7 @@ private fun ItemRowContent(
             modifier = Modifier.weight(3f)
         )
 
-        ItemRowText(
+        ItemRowCurrencyText(
             text = item.total.toString(),
             textAlign = TextAlign.End,
             modifier = Modifier.weight(1f)

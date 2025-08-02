@@ -10,4 +10,5 @@
     <string name="items_screen_total">Total:</string>
     <string name="items_screen_item_removed">Item removed</string>
     <string name="items_screen_item_removed_undo">Undo</string>
+    <string name="items_screen_quantity_range_validation">The quantity must be between 1 and 99</string>
 </resources>

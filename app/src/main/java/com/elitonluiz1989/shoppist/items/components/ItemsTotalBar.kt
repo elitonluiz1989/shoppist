@@ -17,13 +17,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.elitonluiz1989.shoppist.R
 import com.elitonluiz1989.shoppist.items.ItemState
-import com.elitonluiz1989.shoppist.items.shared.TextResource
+import com.elitonluiz1989.shoppist.shared.components.TextResource
+import com.elitonluiz1989.shoppist.shared.currencyFormatter
+import com.elitonluiz1989.shoppist.shared.getCurrentLocale
 
 @Composable
 fun ItemsTotalBar(
     state: ItemState
 ) {
     val total = state.items.sumOf { it.total }
+    val locale = getCurrentLocale()
+    val totalFormatted = currencyFormatter(total.toString(), locale)
 
     Box(
         modifier = Modifier
@@ -45,7 +49,7 @@ fun ItemsTotalBar(
             )
 
             Text(
-                text = total.toString(),
+                text = totalFormatted,
                 textAlign = TextAlign.Companion.End,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.weight(1f)
