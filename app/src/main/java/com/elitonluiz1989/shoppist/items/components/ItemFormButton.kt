@@ -6,10 +6,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.elitonluiz1989.shoppist.R
 import com.elitonluiz1989.shoppist.items.ItemEvent
 import com.elitonluiz1989.shoppist.items.ItemState
+import com.elitonluiz1989.shoppist.ui.theme.background
 
 @Composable
 fun ItemFormButton(
@@ -27,7 +29,11 @@ fun ItemFormButton(
     val contentDescription = handleContentDescription(state)
 
     Button(
-        shape = RoundedCornerShape(size = 5.dp),
+        shape = RoundedCornerShape(5.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,
+            contentColor = background
+        ),
         onClick = {
             addEvent(onEvent)
         },
@@ -35,8 +41,7 @@ fun ItemFormButton(
     ) {
         Icon(
             imageVector = icon,
-            contentDescription = stringResource(contentDescription),
-            tint = MaterialTheme.colorScheme.secondary
+            contentDescription = stringResource(contentDescription)
         )
     }
 }

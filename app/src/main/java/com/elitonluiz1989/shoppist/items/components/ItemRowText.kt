@@ -17,7 +17,7 @@ fun ItemRowText(
 ) {
     Text(
         text = text,
-        color = MaterialTheme.colorScheme.secondary,
+        color = MaterialTheme.colorScheme.primary,
         style = MaterialTheme.typography.bodyLarge,
         textAlign = textAlign,
         maxLines = maxLines,

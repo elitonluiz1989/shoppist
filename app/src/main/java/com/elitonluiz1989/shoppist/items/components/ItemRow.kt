@@ -153,8 +153,8 @@ private fun ItemRowContent(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Gray, MaterialTheme.shapes.small)
+            .background(MaterialTheme.colorScheme.secondary, RoundedCornerShape(8.dp))
+            .border(1.dp, MaterialTheme.colorScheme.tertiary, MaterialTheme.shapes.small)
             .padding(16.dp)
             .combinedClickable(
                 onClick = { },

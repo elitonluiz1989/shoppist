@@ -1,0 +1,13 @@
+<resources>
+    <string name="add">Adicionar</string>
+    <string name="update">Atualizar</string>
+    <string name="delete">Remover</string>
+    <string name="loading">Carregando</string>
+    <string name="items_screen_form_name">Nome</string>
+    <string name="items_screen_form_quantity">Qtd</string>
+    <string name="items_screen_form_price">Preço</string>
+    <string name="items_screen_total">Total:</string>
+    <string name="items_screen_item_removed">Item removido</string>
+    <string name="items_screen_item_removed_undo">Desfazer</string>
+    <string name="items_screen_quantity_range_validation">A quantidade deve estar entre 1 e 99</string>
+</resources>

@@ -8,13 +8,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.elitonluiz1989.domain.Item
@@ -26,7 +29,7 @@ import com.elitonluiz1989.shoppist.shared.components.Loading
 @Composable
 fun ItemsScreen(
     snackbarHostState: SnackbarHostState,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
 ) {
     val viewModel: ItemViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -37,6 +40,17 @@ fun ItemsScreen(
         snackbarHostState,
         paddingValues
     )
+
+    if (!LocalView.current.isInEditMode) {
+        val view = LocalView.current
+
+        SideEffect {
+            val window = (view.context as android.app.Activity).window
+            val insetsController = WindowInsetsControllerCompat(window, view)
+
+            insetsController.isAppearanceLightStatusBars = false
+        }
+    }
 }
 
 @Preview(showBackground = true)
@@ -62,7 +76,7 @@ private fun ItemContent(
     state: ItemState,
     onEvent: (ItemEvent) -> Unit,
     snackbarHostState: SnackbarHostState,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
 ) {
     Column(
         modifier = Modifier
@@ -93,7 +107,9 @@ private fun ItemContent(
                 state = state,
                 onEvent = onEvent,
                 snackbarHostState = snackbarHostState,
-                modifier = Modifier.fillMaxWidth().weight(1f)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             )
         }
 

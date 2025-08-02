@@ -32,7 +32,10 @@ fun ItemsTotalBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp))
+            .background(
+                color = MaterialTheme.colorScheme.secondary,
+                shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+            )
             .padding(8.dp)
     ) {
         Row(
@@ -44,14 +47,14 @@ fun ItemsTotalBar(
             TextResource(
                 id = R.string.items_screen_total,
                 textAlign = TextAlign.Companion.End,
-                color = MaterialTheme.colorScheme.primary,
+                color = Color.White,
                 modifier = Modifier.weight(3f)
             )
 
             Text(
                 text = totalFormatted,
                 textAlign = TextAlign.Companion.End,
-                color = MaterialTheme.colorScheme.primary,
+                color = Color.White,
                 modifier = Modifier.weight(1f)
             )
         }
