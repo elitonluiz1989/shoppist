@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ShoppistTheme {
+            ShoppistTheme(dynamicColor = false) {
                 Surface(modifier = Modifier.fillMaxSize()){
                     val snackbarHostState = remember { SnackbarHostState() }
 
