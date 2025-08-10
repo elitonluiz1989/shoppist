@@ -24,6 +24,7 @@ import com.elitonluiz1989.shoppist.ui.theme.background
 fun ItemFormButton(
     state: ItemState,
     onEvent: (ItemEvent) -> Unit,
+    closeKeyboard: () -> Unit
 ) {
     val icon = handleIcon(state)
     val contentDescription = handleContentDescription(state)
@@ -36,6 +37,7 @@ fun ItemFormButton(
         ),
         onClick = {
             onEvent(ItemEvent.Submit)
+            closeKeyboard()
         },
         modifier = Modifier.height(56.dp)
     ) {
@@ -53,7 +55,8 @@ fun ItemFormButtonPreview() {
 
     ItemFormButton(
         state = state,
-        onEvent = {}
+        onEvent = {},
+        closeKeyboard = {}
     )
 }
 

@@ -64,6 +64,8 @@ fun ItemRow(
                 if (itemIsVisible) {
                     itemPendingToRemove = item
                     itemIsVisible = false
+
+                    onEvent(ItemEvent.reset)
                 }
             }
 

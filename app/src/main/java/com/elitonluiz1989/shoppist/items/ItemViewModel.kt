@@ -49,6 +49,7 @@ class ItemViewModel @Inject constructor(
             is ItemEvent.MarkFormAsTouched -> markFormTouched()
             is ItemEvent.Add -> add()
             is ItemEvent.Delete -> delete(event)
+            is ItemEvent.reset -> reset()
             is ItemEvent.Submit -> submit()
         }
     }
@@ -102,6 +103,10 @@ class ItemViewModel @Inject constructor(
 
             onEvent(ItemEvent.UpdateForm(_defaultItem))
         }
+    }
+
+    private fun reset() {
+        updateForm(_defaultItem)
     }
 
     private fun delete(event: ItemEvent.Delete) {

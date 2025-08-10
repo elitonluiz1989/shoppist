@@ -1,5 +1,7 @@
 package com.elitonluiz1989.shoppist.items.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,6 +30,11 @@ fun ItemForm(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+
+    fun closeKeyboard() {
+        keyboardController?.hide()
+        focusManager.clearFocus()
+    }
 
     Column (
         modifier = Modifier
@@ -52,12 +58,19 @@ fun ItemForm(
                 .fillMaxWidth()
                 .padding(top = 8.dp)
         ) {
-            ItemFormPicker(
-                label = R.string.items_screen_form_quantity,
-                value = state.form.quantity,
-                onValueChange = { onEvent(ItemEvent.UpdateQuantity(it)) },
+            Box(
                 modifier = Modifier.weight(0.3f)
-            )
+                    .clickable(onClick = {
+                        closeKeyboard()
+                    })
+            ) {
+                ItemFormPicker(
+                    label = R.string.items_screen_form_quantity,
+                    value = state.form.quantity,
+                    onValueChange = { onEvent(ItemEvent.UpdateQuantity(it)) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             ItemFormField(
                 value = state.form.price,
@@ -71,8 +84,7 @@ fun ItemForm(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         onEvent(ItemEvent.Submit)
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
+                        closeKeyboard()
                     }
                 ),
                 textStyle = TextStyle(textAlign = TextAlign.End),
@@ -83,7 +95,7 @@ fun ItemForm(
                     .weight(0.7f)
             )
 
-            ItemFormButton(state, onEvent)
+            ItemFormButton(state, onEvent, closeKeyboard = { closeKeyboard() })
         }
     }
 }
