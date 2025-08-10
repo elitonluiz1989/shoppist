@@ -37,7 +37,7 @@ fun ItemFormField(
         keyboardOptions = keyboardOptions,
         singleLine = singleLine,
         shape = RoundedCornerShape(8.dp),
-        textStyle = textStyle,
+        textStyle = textStyle.copy(color = MaterialTheme.colorScheme.primary),
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,

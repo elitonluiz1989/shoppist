@@ -1,6 +1,5 @@
 package com.elitonluiz1989.shoppist.items.components
 
-import com.elitonluiz1989.shoppist.shared.CurrencyVisualTransformation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.elitonluiz1989.shoppist.R
 import com.elitonluiz1989.shoppist.items.ItemEvent
 import com.elitonluiz1989.shoppist.items.ItemState
+import com.elitonluiz1989.shoppist.shared.CurrencyVisualTransformation
 
 @Composable
 fun ItemForm(
@@ -45,19 +46,11 @@ fun ItemForm(
                 .fillMaxWidth()
                 .padding(top = 8.dp)
         ) {
-            ItemFormField(
+            ItemFormPicker(
+                label = R.string.items_screen_form_quantity,
                 value = state.form.quantity,
                 onValueChange = { onEvent(ItemEvent.UpdateQuantity(it)) },
-                onFocusChanged = { onEvent(ItemEvent.MarkFormAsTouched) },
-                label = R.string.items_screen_form_quantity,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                textStyle = TextStyle(textAlign = TextAlign.End),
-                isError = state.form.quantityInvalid,
-                modifier = Modifier
-                    .weight(1f)
+                modifier = Modifier.weight(0.3f)
             )
 
             ItemFormField(
@@ -74,7 +67,7 @@ fun ItemForm(
                 visualTransformation = CurrencyVisualTransformation(),
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
-                    .weight(3f)
+                    .weight(0.7f)
             )
 
             ItemFormButton(state, onEvent)
