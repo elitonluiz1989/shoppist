@@ -4,15 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elitonluiz1989.domain.Item
 import com.elitonluiz1989.domain.ItemRepository
-import com.elitonluiz1989.shoppist.R
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,11 +35,8 @@ class ItemViewModel @Inject constructor(
     )
     val state: StateFlow<ItemState> = _state.asStateFlow()
 
-    private val priceRegex = Regex("^\\d*([.,])?\\d{0,2}$")
-
     init {
         observeItems()
-        observeQuantity()
     }
 
     fun onEvent(event: ItemEvent) {
@@ -57,6 +49,7 @@ class ItemViewModel @Inject constructor(
             is ItemEvent.MarkFormAsTouched -> markFormTouched()
             is ItemEvent.Add -> add()
             is ItemEvent.Delete -> delete(event)
+            is ItemEvent.Submit -> submit()
         }
     }
 
@@ -75,9 +68,7 @@ class ItemViewModel @Inject constructor(
     }
 
     private fun updatePrice(value: String) {
-        if (value.matches(priceRegex) == false) return
-
-        _state.update { it.copy( form = it.form.copy(price = value)) }
+        _state.update { it.copy( form = it.form.copy(price = value.filter { it.isDigit() })) }
     }
 
     private fun updateForm(value: Item) {
@@ -119,24 +110,16 @@ class ItemViewModel @Inject constructor(
         }
     }
 
+    private fun submit() {
+        markFormTouched()
+        add()
+    }
+
     private fun observeItems() {
         viewModelScope.launch {
             repository.getAll().collect { allItems ->
                 _state.update { it.copy(items = allItems) }
             }
-        }
-    }
-
-    private fun observeQuantity() {
-        CoroutineScope(Dispatchers.Default).launch {
-            state
-                .map { it.form.quantityInvalid }
-                .distinctUntilChanged()
-                .collect { value ->
-                    val error = if (value) R.string.items_screen_quantity_range_validation else null
-
-                    _state.update { it.copy(error = error) }
-                }
         }
     }
 }

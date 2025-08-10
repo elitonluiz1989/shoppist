@@ -19,9 +19,6 @@ data class ItemFormData (
     val nameInvalid: Boolean
         get() = formTouched && !validateName()
 
-    val quantityInvalid: Boolean
-        get() = formTouched && !validateQuantity()
-
     val priceInvalid: Boolean
         get() = formTouched && !validatePrice()
 
@@ -37,6 +34,6 @@ data class ItemFormData (
     }
 
     private fun validatePrice(): Boolean {
-        return priceConverted > 0
+        return priceConverted >= 0
     }
 }

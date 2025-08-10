@@ -2,6 +2,7 @@ package com.elitonluiz1989.shoppist.items.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
@@ -25,6 +26,7 @@ fun ItemFormField(
     @StringRes label: Int,
     keyboardOptions: KeyboardOptions,
     modifier: Modifier = Modifier,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
     textStyle: TextStyle = TextStyle(),
     isError: Boolean = false,
@@ -35,6 +37,7 @@ fun ItemFormField(
         onValueChange = onValueChange,
         label = { TextResource(label) },
         keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         singleLine = singleLine,
         shape = RoundedCornerShape(8.dp),
         textStyle = textStyle.copy(color = MaterialTheme.colorScheme.primary),
@@ -49,7 +52,6 @@ fun ItemFormField(
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
         ),
         isError = isError,
-
         visualTransformation = visualTransformation,
         modifier = modifier
             .onFocusChanged {

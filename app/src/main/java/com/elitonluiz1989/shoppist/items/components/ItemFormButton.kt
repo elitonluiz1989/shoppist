@@ -35,7 +35,7 @@ fun ItemFormButton(
             contentColor = background
         ),
         onClick = {
-            addEvent(onEvent)
+            onEvent(ItemEvent.Submit)
         },
         modifier = Modifier.height(56.dp)
     ) {
@@ -67,9 +67,4 @@ private fun handleIcon(state: ItemState): ImageVector {
 private fun handleContentDescription(state: ItemState): Int {
     return if (state.form.idValid) R.string.update
         else R.string.add
-}
-
-private fun addEvent(onEvent: (ItemEvent) -> Unit) {
-    onEvent(ItemEvent.MarkFormAsTouched)
-    onEvent(ItemEvent.Add)
 }

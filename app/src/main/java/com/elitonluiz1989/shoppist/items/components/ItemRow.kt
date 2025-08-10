@@ -174,10 +174,16 @@ private fun ItemRowContent(
             modifier = Modifier.weight(3f)
         )
 
-        ItemRowCurrencyText(
-            text = item.total.toString(),
-            textAlign = TextAlign.End,
+        Box(
             modifier = Modifier.weight(1f)
-        )
+        ) {
+            if (item.total > 0) {
+                ItemRowCurrencyText(
+                    text = item.total.toString(),
+                    textAlign = TextAlign.End,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
     }
 }

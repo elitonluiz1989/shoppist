@@ -11,4 +11,5 @@ sealed class ItemEvent {
     object MarkFormAsTouched: ItemEvent()
     object Add : ItemEvent()
     data class Delete(val item: Item) : ItemEvent()
+    object Submit : ItemEvent()
 }

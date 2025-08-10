@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -24,6 +27,9 @@ fun ItemForm(
     state: ItemState,
     onEvent: (ItemEvent) -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
+
     Column (
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 6.dp)
@@ -61,6 +67,13 @@ fun ItemForm(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        onEvent(ItemEvent.Submit)
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
                 ),
                 textStyle = TextStyle(textAlign = TextAlign.End),
                 isError = state.form.priceInvalid,
